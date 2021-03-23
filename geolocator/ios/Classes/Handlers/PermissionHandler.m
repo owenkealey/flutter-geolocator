@@ -45,24 +45,7 @@
     self.errorHandler = errorHandler;
     self.locationManager = [[CLLocationManager alloc] init];
     self.locationManager.delegate = self;
-    
-    if ([[NSBundle mainBundle] objectForInfoDictionaryKey:@"NSLocationWhenInUseUsageDescription"] != nil) {
-        [self.locationManager requestWhenInUseAuthorization];
-    }
-    else if ([[NSBundle mainBundle] objectForInfoDictionaryKey:@"NSLocationAlwaysUsageDescription"] != nil) {
-        [self.locationManager requestAlwaysAuthorization];
-    }
-    else {
-        if (self.errorHandler) {
-            self.errorHandler(GeolocatorErrorPermissionDefinitionsNotFound,
-                              @"Permission definitions not found in the app's Info.plist. Please make sure to "
-                              "add either NSLocationWhenInUseUsageDescription or "
-                              "NSLocationAlwaysUsageDescription to the app's Info.plist file.");
-        }
-        
-        [self cleanUp];
-        return;
-    }
+    [self.locationManager requestAlwaysAuthorization];
 }
 
 - (void) locationManager:(CLLocationManager *)manager didChangeAuthorizationStatus:(CLAuthorizationStatus)status {
